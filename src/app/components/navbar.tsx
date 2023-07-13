@@ -12,8 +12,9 @@ export default function Navbar() {
             <li className="px-4 py-2"><Link href="">What's New</Link></li>
             <li className="px-4 py-2"><Link href="">Delivery</Link></li>
         </ul>
-        <div className="flex bg-gray-200 rounded-3xl px-4 py-1">
+        <div className="flex items-center gap-4 bg-gray-200 rounded-3xl px-4 py-1">
           <input type="search" className=" w-64 bg-transparent focus:outline-none" placeholder="Search Product" />
+          
           <Image src="/search.svg" alt="btn" width="24" height="16" 
           className="hover:cursor-pointer"
           onClick={()=>{
@@ -36,7 +37,6 @@ export default function Navbar() {
               </svg>
               Cart
             </Link>
-          
         </div>
       </nav>
     )
