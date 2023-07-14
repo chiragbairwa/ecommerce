@@ -1,4 +1,4 @@
-import Navbar from './components/navbar'
+// import Navbar from './components/navbar'
 import Link from 'next/link'
 
 const ProductCard = () => {
@@ -40,7 +40,7 @@ const ProductCard = () => {
 export default function Home() {
   return (
     <main className="bg-white text-black px-24">
-      <Navbar/>
+      {/* <Navbar/> */}
       <div className=' bg-pink-100 rounded p-12 mb-4' >
         <p className='text-green-800 text-4xl font-bold mb-8'>
           Grab Upto 50% Off On 
