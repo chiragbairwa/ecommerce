@@ -1,8 +1,9 @@
+import Image from "next/image"
+
 const ProductCard = () => {
     return (
       <div className="bg-gray-300 rounded">
-      <img src="/headphone.png" alt="phone"
-          className='p-8' width={130} />
+        <Image src="/headphone.png" alt="Product-Image" className='p-8' width={130} height={130} />
       </div>
     )
 }

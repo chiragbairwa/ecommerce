@@ -9,7 +9,7 @@ export default function Navbar() {
         <ul className="flex mx-4">
             <li className="px-4 py-2"><Link href="/">Categories</Link></li>
             <li className="px-4 py-2"><Link href="/">Deals</Link></li>
-            <li className="px-4 py-2"><Link href="/">What's New</Link></li>
+            <li className="px-4 py-2"><Link href="/">{`What's New`}</Link></li>
             <li className="px-4 py-2"><Link href="/">Delivery</Link></li>
         </ul>
         <div className="flex items-center gap-4 bg-gray-200 rounded-3xl px-4 py-1">

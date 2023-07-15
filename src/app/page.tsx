@@ -1,12 +1,11 @@
-// import Navbar from './components/navbar'
 import Link from 'next/link'
 
 const ProductCard = () => {
   return (
-    <div className='relative'>
+    <div className='relative w-fit shrink-0'>
       <div className="bg-gray-200 rounded">
         <Link href="/product">
-          <img src="/headphone.png" className='p-8 w-52' alt="phone" />
+          <img src="/headphone.png" className='p-8 w-52 aspect-1/1' alt="phone" />
         </Link>
         
         <div className="p-1 bg-gray-100 rounded-full absolute top-2 right-2">
@@ -40,13 +39,11 @@ const ProductCard = () => {
 export default function Home() {
   return (
     <main className="bg-white text-black px-24">
-      {/* <Navbar/> */}
       <div className=' bg-pink-100 rounded p-12 mb-4' >
-        <p className='text-green-800 text-4xl font-bold mb-8'>
-          Grab Upto 50% Off On 
-          <br/>Selected Headphone
+        <p className='text-green-800 text-4xl font-bold mb-8 w-1/2'>
+          Grab Upto 50% Off On Selected Headphone
         </p>
-        <Link className="rounded-3xl px-4 py-2 bg-green-800 text-white font-semibold hover:text-black" href="">Buy Now</Link>
+        <Link href="/" className="rounded-full px-4 py-2 bg-green-800 text-white">Buy Now</Link>
       </div>
 
       <div className='flex gap-4'>
@@ -71,7 +68,7 @@ export default function Home() {
         </select>
       </div>
 
-      <h2 className='my-4 font-bold'>Headphones For You!</h2>
+      <h2 className='my-4 font-bold  text-xl'>Headphones For You!</h2>
 
       {/* Product Cards */}
       <div className='flex gap-4 flex-wrap'>
@@ -82,6 +79,50 @@ export default function Home() {
         <ProductCard></ProductCard>
         <ProductCard></ProductCard>
         <ProductCard></ProductCard>
+      </div>
+      {/* NEXT */}
+      <div className='flex gap-2 justify-center'>
+        <Link href="/" className='rounded-full px-4 py-2 border border-green-800 bg-green-800 text-white'>1</Link>
+        <Link href="/" className='rounded-full px-4 py-2 border'>2</Link>
+        <Link href="/" className='rounded-full px-4 py-2 border'>3</Link>
+        <Link href="/" className='rounded-full px-4 py-2 border'>{`→`}</Link>
+      </div>
+
+      <h2 className='my-4 font-bold text-xl'>Weekly Popular Products</h2>
+      {/* Product Cards */}
+      <div className='flex gap-4 pb-4 overflow-x-scroll overflow-y-hidden'>
+        <ProductCard></ProductCard>
+        <ProductCard></ProductCard>
+        <ProductCard></ProductCard>
+        <ProductCard></ProductCard>
+        <ProductCard></ProductCard>
+        <ProductCard></ProductCard>
+      </div>
+
+      <h2 className='my-4 font-bold mt-8 text-xl'>Services To Help You Shop</h2>
+      {/* Product Cards */}
+      <div className='flex gap-4 pb-8'>
+        <div className='rounded border'>
+          <div className=''>
+            <p className='p-4 pr-48 font-bold text-xl'>Frequently Asked Questions</p>
+            <p className='p-4 pt-0 pr-48 text-sm'>Updates on safe Shopping in our Stores</p>
+          </div>
+            <img src='/faq.svg' className='w-full' width="90" />
+        </div>
+        
+        <div className='rounded border flex flex-col justify-between'>
+          <div>
+            <p className='p-4 pr-48 font-bold text-xl'>Online Payment Process</p>
+            <p className='p-4 pt-0 pr-48 text-sm'>Updates on safe Shopping in our Stores</p>
+          </div>
+          <img src='/online_pay.svg' className='w-full' width="100" />
+        </div>
+        
+        <div className='rounded border overflow-hidden'>
+          <p className='p-4 pr-48 font-bold text-xl'>Home Delivery Options</p>
+          <p className='p-4 pt-0 pr-48 text-sm'>Updates on safe Shopping in our Stores</p>
+          <img src='/delivery_op.svg' className='w-full ' width="100" />
+        </div>
       </div>
     </main>
   )

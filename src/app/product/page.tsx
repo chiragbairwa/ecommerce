@@ -20,8 +20,7 @@ export default function Product() {
       <div className="flex">
         <div className='w-1/2'>
             <div className="bg-gray-300 flex align-middle justify-center rounded relative">
-                <img src="/headphone.png" alt="phone"
-                className='p-12' width={350}></img>
+                <img src="/headphone.png" alt="phone" className='p-12' width={350}></img>
                 <div className="p-1 bg-gray-200 rounded-full absolute top-2 right-2">
                     <svg className="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 21 19">
                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 4C5.5-1.5-1.5 5.5 4 11l7 7 7-7c5.458-5.458-1.542-12.458-7-7Z"/>
@@ -79,7 +78,7 @@ export default function Product() {
                       <span className='text-orange-300 mx-1'>12 Items</span> 
                       Left!
                     </p>
-                    <p>Don't miss it</p>
+                    <p>{`Don't miss it`}</p>
                   </div>
                   
                 </div>
