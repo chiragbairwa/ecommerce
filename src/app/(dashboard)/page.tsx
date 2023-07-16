@@ -107,7 +107,7 @@ export default function Home() {
             <p className='p-4 pr-48 font-bold text-xl'>Frequently Asked Questions</p>
             <p className='p-4 pt-0 pr-48 text-sm'>Updates on safe Shopping in our Stores</p>
           </div>
-            <img src='/faq.svg' className='w-full' width="90" />
+            <img src='/faq.svg' className='w-full' width="100" />
         </div>
         
         <div className='rounded border flex flex-col justify-between'>
