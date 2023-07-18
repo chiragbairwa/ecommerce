@@ -5,7 +5,9 @@ import Link from "next/link"
 export default function Navbar() {
     return (
       <nav className="flex py-4 justify-between bg-white text-black px-24">
-        <Image src="/vercel.svg" alt="logo" width={100} height={24} />
+        
+          <Image src="/vercel.svg" alt="logo" width={100} height={240}/>
+        
         <ul className="flex mx-4">
             <li className="px-4 py-2"><Link href="/">Categories</Link></li>
             <li className="px-4 py-2"><Link href="/">Deals</Link></li>
@@ -14,13 +16,15 @@ export default function Navbar() {
         </ul>
         <div className="flex items-center gap-4 bg-gray-200 rounded-3xl px-4 py-1">
           <input type="search" className=" w-64 bg-transparent focus:outline-none" placeholder="Search Product" />
-          
-          <Image src="/search.svg" alt="btn" width="24" height="16" 
-          className="hover:cursor-pointer"
-          onClick={()=>{
-            alert("Clicked")
-          }}
-          />
+          <div >
+            <Image src="/search.svg" alt="btn" width={24} height={16}
+              className="hover:cursor-pointer"
+              onClick={()=>{
+                alert("Clicked")
+              }}
+            />
+
+          </div>
         </div>
 
         <div className="mt-2 flex">  

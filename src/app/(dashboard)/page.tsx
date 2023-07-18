@@ -1,12 +1,53 @@
+"use client"
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import Image from 'next/image'
 
-const ProductCard = () => {
+// type ProductData {
+//   id : number,
+//   title:'',
+//   price:'',
+//   category:'',
+//   description:'',
+//   image:''
+// }
+
+const ProductCard = (props : any) => {
+
+    const [productData, setProductData] = useState({
+      id: 0,
+      title:'',
+      price:'',
+      category:'',
+      description:'',
+      image:'',
+      rating:{
+        rate : 0.0,
+        count : 0
+      }
+  })
+
+  useEffect(()=>{
+    fetch(`https://fakestoreapi.com/products/${props.id}`)
+            .then(res=>res.json())
+            .then(json=>{
+              setProductData({...json})
+            })
+  }, [props.id])
+  
   return (
-    <div className='relative w-fit shrink-0'>
-      <div className="bg-gray-200 rounded">
-        <Link href="/product">
-          <img src="/headphone.png" className='p-8 w-52 aspect-1/1' alt="phone" />
-        </Link>
+    <div className=' w-64 h-42 shrink-0'>
+      <div className="relative bg-gray-200 rounded p-4 flex justify-center">
+
+        <div className='h-[14rem] relative w-full rounded'>
+          <Link href="/product">
+              <Image src={productData.image} 
+                fill
+                alt="phone" 
+                className='object-contain'
+                />
+          </Link>
+        </div>
         
         <div className="p-1 bg-gray-100 rounded-full absolute top-2 right-2">
           <svg className="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 21 19">
@@ -14,11 +55,11 @@ const ProductCard = () => {
           </svg>
         </div>
       </div>
-      <div className='flex justify-between'>
-        <p className='font-bold'>Wireless Earbuds</p>
-        <p className='font-bold'>$99.99</p>
+      <div className='flex justify-between items-center'>
+        <p className='font-bold '>{productData.title}</p>
+        <p className='font-bold'>{`${productData.price} $`} </p>
       </div>
-      <p className='text-xs'>Lorem ipsum dolor sit amet</p>
+      <p className='text-xs'>{productData.description}</p>
       
       {/* Stars */}
       <div className="flex mb-4">{
@@ -30,13 +71,14 @@ const ProductCard = () => {
           )
         })}
       </div>
-      <Link className="rounded-full px-4 py-2 border text-black font-semibold hover:bg-gray-200" href="">
+      <Link href="" className="rounded-full px-4 py-2 border text-black font-semibold hover:bg-gray-200" >
         Add to Cart
       </Link>
     </div>
   )
 }
 export default function Home() {
+
   return (
     <main className="bg-white text-black px-24">
       <div className=' bg-pink-100 rounded p-12 mb-4' >
@@ -72,13 +114,12 @@ export default function Home() {
 
       {/* Product Cards */}
       <div className='flex gap-4 flex-wrap'>
-        <ProductCard></ProductCard>
-        <ProductCard></ProductCard>
-        <ProductCard></ProductCard>
-        <ProductCard></ProductCard>
-        <ProductCard></ProductCard>
-        <ProductCard></ProductCard>
-        <ProductCard></ProductCard>
+        {
+          [1,2,3,4,5,6,7,8,9,10].map((productID)=> {
+              return <ProductCard id={productID} key={productID}></ProductCard>
+            }
+          )
+        }
       </div>
       {/* NEXT */}
       <div className='flex gap-2 justify-center'>
@@ -91,12 +132,12 @@ export default function Home() {
       <h2 className='my-4 font-bold text-xl'>Weekly Popular Products</h2>
       {/* Product Cards */}
       <div className='flex gap-4 pb-4 overflow-x-scroll overflow-y-hidden'>
-        <ProductCard></ProductCard>
-        <ProductCard></ProductCard>
-        <ProductCard></ProductCard>
-        <ProductCard></ProductCard>
-        <ProductCard></ProductCard>
-        <ProductCard></ProductCard>
+        {
+          [11,12,13,14,15,16].map((productID)=> {
+              return <ProductCard id={productID} key={productID}></ProductCard>
+            }
+          )
+        }
       </div>
 
       <h2 className='my-4 font-bold mt-8 text-xl'>Services To Help You Shop</h2>
@@ -107,7 +148,7 @@ export default function Home() {
             <p className='p-4 pr-48 font-bold text-xl'>Frequently Asked Questions</p>
             <p className='p-4 pt-0 pr-48 text-sm'>Updates on safe Shopping in our Stores</p>
           </div>
-            <img src='/faq.svg' className='w-full' width="100" />
+            <img src='/faq.svg' className='w-full' width="100" alt="faq" />
         </div>
         
         <div className='rounded border flex flex-col justify-between'>
@@ -115,13 +156,13 @@ export default function Home() {
             <p className='p-4 pr-48 font-bold text-xl'>Online Payment Process</p>
             <p className='p-4 pt-0 pr-48 text-sm'>Updates on safe Shopping in our Stores</p>
           </div>
-          <img src='/online_pay.svg' className='w-full' width="100" />
+          <img src='/online_pay.svg' className='w-full' width="100" alt="pay" />
         </div>
         
         <div className='rounded border overflow-hidden'>
           <p className='p-4 pr-48 font-bold text-xl'>Home Delivery Options</p>
           <p className='p-4 pt-0 pr-48 text-sm'>Updates on safe Shopping in our Stores</p>
-          <img src='/delivery_op.svg' className='w-full ' width="100" />
+          <img src='/delivery_op.svg' className='w-full ' width="100" alt="delivery" />
         </div>
       </div>
     </main>
