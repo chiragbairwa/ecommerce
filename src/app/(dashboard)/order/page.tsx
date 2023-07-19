@@ -95,9 +95,9 @@ export default function Order(){
                 </label>
 
                 <div className="flex gap-2 my-4">
-                    <img src="/logo/amazon_logo.svg" width={100} height="100" className="rounded border p-2 h-12 object-contain" />
-                    <img src="/logo/paypal_logo.svg" width={100} className="rounded border p-2 h-12 object-contain"/>
-                    <img src="/logo/visa_logo.svg" width={100} height={20} className="rounded border p-2 h-12 object-cover"/>
+                    <img src="/logo/amazon_logo.svg" width={100} height="100" className="rounded border p-2 h-12 object-contain" loading='lazy' />
+                    <img src="/logo/paypal_logo.svg" width={100} className="rounded border p-2 h-12 object-contain" loading='lazy'/>
+                    <img src="/logo/visa_logo.svg" width={100} height={20} className="rounded border p-2 h-12 object-cover" loading='lazy'/>
                 </div>
 
                 <p className="font-bold">Email*</p>

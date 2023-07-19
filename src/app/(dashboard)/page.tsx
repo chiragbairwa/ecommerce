@@ -36,18 +36,21 @@ const ProductCard = (props : any) => {
   }, [props.id])
   
   return (
-    <div className=' w-64 h-42 shrink-0'>
-      <div className="relative bg-gray-200 rounded p-4 flex justify-center">
+    <div className='w-64 h-42'>
 
-        <div className='h-[14rem] relative w-full rounded'>
-          <Link href="/product">
-              <Image src={productData.image} 
-                fill
-                alt="phone" 
-                className='object-contain'
-                />
+      <div className="relative bg-gray-200 rounded p-4">
+          <Link href={{
+            pathname: "/product",
+            query: `id=${props.id}`, // the data
+          }}>
+            <div className='h-[14rem] relative'>
+                <Image src={productData.image} 
+                  fill
+                  alt="phone" 
+                  className='object-contain mix-blend-multiply'
+                  />
+            </div>
           </Link>
-        </div>
         
         <div className="p-1 bg-gray-100 rounded-full absolute top-2 right-2">
           <svg className="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 21 19">
@@ -55,14 +58,14 @@ const ProductCard = (props : any) => {
           </svg>
         </div>
       </div>
-      <div className='flex justify-between items-center'>
-        <p className='font-bold '>{productData.title}</p>
-        <p className='font-bold'>{`${productData.price} $`} </p>
+      <div className='flex justify-between gap-4'>
+        <p className='font-bold text-sm truncate'>{productData.title}</p>
+        <p className='font-bold text-lg'>{`${productData.price}$`} </p>
       </div>
-      <p className='text-xs'>{productData.description}</p>
+      <p className='text-xs h-12 overflow-hidden'>{productData.description}</p>
       
       {/* Stars */}
-      <div className="flex mb-4">{
+      <div className="flex mt-2 mb-4">{
         [1,2,3,4,5].map( (r)=>{
           return (
             <svg key={`${r}`} className="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
@@ -71,9 +74,9 @@ const ProductCard = (props : any) => {
           )
         })}
       </div>
-      <Link href="" className="rounded-full px-4 py-2 border text-black font-semibold hover:bg-gray-200" >
+      <button className="rounded-full px-4 py-2 border text-black font-semibold hover:bg-gray-200" >
         Add to Cart
-      </Link>
+      </button>
     </div>
   )
 }
@@ -81,11 +84,11 @@ export default function Home() {
 
   return (
     <main className="bg-white text-black px-24">
-      <div className=' bg-pink-100 rounded p-12 mb-4' >
-        <p className='text-green-800 text-4xl font-bold mb-8 w-1/2'>
+      <div className=' bg-pink-200 rounded p-12 mb-4' >
+        <p className='text-black text-4xl font-bold mb-8 w-1/2'>
           Grab Upto 50% Off On Selected Headphone
         </p>
-        <Link href="/" className="rounded-full px-4 py-2 bg-green-800 text-white">Buy Now</Link>
+        <Link href="/" className="rounded-full px-4 py-2 bg-black text-white hover:bg-white hover:text-black ">Buy Now</Link>
       </div>
 
       <div className='flex gap-4'>
@@ -110,24 +113,24 @@ export default function Home() {
         </select>
       </div>
 
-      <h2 className='my-4 font-bold  text-xl'>Headphones For You!</h2>
+      <h2 className='my-4 font-bold  text-xl'>Products For You!</h2>
 
       {/* Product Cards */}
-      <div className='flex gap-4 flex-wrap'>
+      <div className='grid grid-cols-4 gap-4'>
         {
-          [1,2,3,4,5,6,7,8,9,10].map((productID)=> {
+          [1,2,3,4,5,6,7,8].map((productID)=> {
               return <ProductCard id={productID} key={productID}></ProductCard>
             }
           )
         }
       </div>
-      {/* NEXT */}
-      <div className='flex gap-2 justify-center'>
+      {/* NEXT
+      <div className='flex gap-2 justify-center mt-8'>
         <Link href="/" className='rounded-full px-4 py-2 border border-green-800 bg-green-800 text-white'>1</Link>
         <Link href="/" className='rounded-full px-4 py-2 border'>2</Link>
         <Link href="/" className='rounded-full px-4 py-2 border'>3</Link>
         <Link href="/" className='rounded-full px-4 py-2 border'>{`→`}</Link>
-      </div>
+      </div> */}
 
       <h2 className='my-4 font-bold text-xl'>Weekly Popular Products</h2>
       {/* Product Cards */}
@@ -148,7 +151,7 @@ export default function Home() {
             <p className='p-4 pr-48 font-bold text-xl'>Frequently Asked Questions</p>
             <p className='p-4 pt-0 pr-48 text-sm'>Updates on safe Shopping in our Stores</p>
           </div>
-            <img src='/faq.svg' className='w-full' width="100" alt="faq" />
+            <img src='/faq.svg' className='w-full' width="100" alt="faq" loading='lazy'/>
         </div>
         
         <div className='rounded border flex flex-col justify-between'>
@@ -156,13 +159,13 @@ export default function Home() {
             <p className='p-4 pr-48 font-bold text-xl'>Online Payment Process</p>
             <p className='p-4 pt-0 pr-48 text-sm'>Updates on safe Shopping in our Stores</p>
           </div>
-          <img src='/online_pay.svg' className='w-full' width="100" alt="pay" />
+          <img src='/online_pay.svg' className='w-full' width="100" alt="pay" loading='lazy'/>
         </div>
         
         <div className='rounded border overflow-hidden'>
           <p className='p-4 pr-48 font-bold text-xl'>Home Delivery Options</p>
           <p className='p-4 pt-0 pr-48 text-sm'>Updates on safe Shopping in our Stores</p>
-          <img src='/delivery_op.svg' className='w-full ' width="100" alt="delivery" />
+          <img src='/delivery_op.svg' className='w-full ' width="100" alt="delivery" loading='lazy'/>
         </div>
       </div>
     </main>

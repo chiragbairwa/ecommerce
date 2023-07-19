@@ -1,15 +1,39 @@
 "use client"
 
-import { useState } from 'react'
-// import Navbar from '../components/navbar'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
-
+import Image from 'next/image'
+import { useSearchParams } from 'next/navigation'
 import ProductCard from '../components/productCard'
 
 
 export default function Product() {
   const [noOfItem, setnoOfItems] = useState(0)
 
+  const [productData, setProductData] = useState({
+    id: 0,
+    title:'',
+    price:'',
+    category:'',
+    description:'',
+    image:'',
+    rating:{
+      rate : 0.0,
+      count : 0
+    }
+})
+  const searchParams = useSearchParams()
+  const productID = searchParams.get("id");
+
+  
+  useEffect(()=>{
+    fetch(`https://fakestoreapi.com/products/${productID}`)
+          .then(res=>res.json())
+          .then(json=>{
+            setProductData({...json})
+    })
+    console.log(1)
+  },[])
   return (
     <main className="bg-white text-black px-24 h-screen">
       {/* Navigation Route */}
@@ -19,8 +43,8 @@ export default function Product() {
 
       <div className="flex">
         <div className='w-1/2'>
-            <div className="bg-gray-300 flex align-middle justify-center rounded relative">
-                <img src="/headphone.png" alt="phone" className='p-12' width={350}></img>
+            <div className="w-full h-[25rem] bg-gray-300 flex justify-center rounded relative">
+                <Image src={productData.image} alt="phone" className='p-8 mix-blend-multiply object-contain' fill />
                 <div className="p-1 bg-gray-200 rounded-full absolute top-2 right-2">
                     <svg className="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 21 19">
                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 4C5.5-1.5-1.5 5.5 4 11l7 7 7-7c5.458-5.458-1.542-12.458-7-7Z"/>
@@ -28,18 +52,18 @@ export default function Product() {
                 </div>
             </div>
             {/* Product Cards */}
-            <div className='flex justify-between mt-4 '>
-                <ProductCard></ProductCard>
-                <ProductCard></ProductCard>
-                <ProductCard></ProductCard>
-                <ProductCard></ProductCard>
+            <div className='flex justify-between mt-4'>
+                <ProductCard image={productData.image}></ProductCard>
+                <ProductCard image={productData.image}></ProductCard>
+                <ProductCard image={productData.image}></ProductCard>
+                <ProductCard image={productData.image}></ProductCard>
             </div>
         </div>
 
         {/* Content Side */}
         <div className='w-1/2 pl-12'>
-            <p className='text-2xl font-bold'>Airpods - Max</p>
-            <p className='text-sm'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet,</p>
+            <p className='text-2xl font-bold'>{productData.title}</p>
+            <p className='text-sm'>{productData.description}</p>
             
             {/* Stars */}
             <div className="flex mb-4 mt-2 items-center">{
@@ -50,11 +74,11 @@ export default function Product() {
                     </svg>
                 )
                 })}
-                <p className='ml-1'>{`(121)`}</p>
+                <p className='ml-1'>({productData.rating.count})</p>
             </div>
                 <hr/>
                 <p className="font-bold text-xl mt-4">
-                    {`$259.00 or 99.99/Month`}
+                    {productData.price}$
                 </p>
                 <p className='text-sm mb-4'>Lorem ipsum dolor sit amet consectetur </p>
                 
