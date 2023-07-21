@@ -18,7 +18,7 @@ import { useUserData } from '../context/userData'
 // }
 
 const ProductCard = (props : any) => {
-  const {cart, setCart} = useUserData()
+  const { cartItems, setCartItems} = useUserData()
 
   const [productData, setProductData] = useState({
     id: 0,
@@ -34,12 +34,16 @@ const ProductCard = (props : any) => {
   })
 
   useEffect(()=>{
-    fetch(`https://fakestoreapi.com/products/${props.id}`)
+    fetch(`https://fakestoreapi.com/products/${props.id}` , { cache: 'force-cache' } )
             .then(res=>res.json())
             .then(json=>{
               setProductData({...json})
             })
   }, [props.id])
+  
+  const handleAddToCart = () => {
+    setCartItems( [...cartItems, productData] )
+  }
   
   return (
     <div className='w-64 h-42'>
@@ -56,10 +60,10 @@ const ProductCard = (props : any) => {
                     src={productData.image} 
                     fill
                     alt={productData.category}
-                    className={`mix-blend-multiply object-contain ease-in ${productData.id ? '' : 'p-12'} `} 
+                    className={`mix-blend-multiply object-contain ease-in transform-gpu ${productData.id ? '' : 'p-12'} `} 
                   />
                 :
-                  <div role="status" className="space-y-8 animate-pulse md:space-y-0 md:space-x-8 md:flex md:items-center">
+                  <div role="status" className="transform-gpu space-y-8 animate-pulse md:space-y-0 md:space-x-8 md:flex md:items-center">
                       <div className="flex items-center justify-center w-full h-48 bg-gray-300 rounded sm:w-96 dark:bg-gray-700">
                       <svg aria-hidden="true" className="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
@@ -85,9 +89,9 @@ const ProductCard = (props : any) => {
       
       {/* Stars */}
       <div className="flex mt-2 mb-4 items-center">{
-        [1,2,3,4,5].map( (r)=>{
+        [...Array(Math.round(productData.rating.rate))].map( (item, i)=>{
           return (
-            <svg key={`${r}`} className="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+            <svg key={`${i}-stars`} className="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
               <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
             </svg>
           )
@@ -97,7 +101,7 @@ const ProductCard = (props : any) => {
       </div>
 
       <button className="rounded-full px-4 py-2 border border-2 text-black font-semibold hover:bg-gray-200" 
-        onClick={()=> {setCart(cart+1)}} >
+        onClick={ handleAddToCart } >
         Add to Cart
       </button>
     </div>
@@ -138,7 +142,7 @@ export default function Home() {
       <h2 className='my-4 font-bold  text-xl'>Products For You!</h2>
 
       {/* Product Cards */}
-      <div className='grid grid-cols-4 gap-4'>
+      <div className='grid md:grid-flow-col md:grid-rows-2 justify-between gap-4'>
         {
           [1,2,3,4,5,6,7,8].map((productID)=> {
               return <ProductCard id={productID} key={productID}></ProductCard>
@@ -171,23 +175,23 @@ export default function Home() {
         <div className='rounded border'>
           <div className=''>
             <p className='p-4 pr-48 font-bold text-xl'>Frequently Asked Questions</p>
-            <p className='p-4 pt-0 pr-48 text-sm'>Updates on safe Shopping in our Stores</p>
+            <p className='p-4 pt-0 text-sm'>Updates on safe Shopping in our Stores</p>
           </div>
-            <img src='/faq.svg' className='w-full' width="100" alt="faq" loading='lazy'/>
+            <Image src='/faq.svg' className='w-full' width="100" height={100} alt="faq" />
         </div>
         
         <div className='rounded border flex flex-col justify-between'>
           <div>
             <p className='p-4 pr-48 font-bold text-xl'>Online Payment Process</p>
-            <p className='p-4 pt-0 pr-48 text-sm'>Updates on safe Shopping in our Stores</p>
+            <p className='p-4 pt-0 text-sm'>Updates on safe Shopping in our Stores</p>
           </div>
-          <img src='/online_pay.svg' className='w-full' width="100" alt="pay" loading='lazy'/>
+          <Image src='/online_pay.svg' className='w-full' width="100" height={100} alt="pay"/>
         </div>
         
         <div className='rounded border overflow-hidden'>
           <p className='p-4 pr-48 font-bold text-xl'>Home Delivery Options</p>
-          <p className='p-4 pt-0 pr-48 text-sm'>Updates on safe Shopping in our Stores</p>
-          <img src='/delivery_op.svg' className='w-full ' width="100" alt="delivery" loading='lazy'/>
+          <p className='p-4 pt-0 text-sm'>Updates on safe Shopping in our Stores</p>
+          <Image src='/delivery_op.svg' className='w-full ' width="150" height={100} alt="delivery" />
         </div>
       </div>
     </main>

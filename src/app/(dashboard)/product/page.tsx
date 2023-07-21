@@ -9,7 +9,7 @@ import { useUserData } from '@/app/context/userData'
 
 export default function Product() {
   const [noOfItem, setnoOfItems] = useState(0)
-  const {cart, setCart} = useUserData()
+  const {cartItems, setCartItems} = useUserData()
   
   const [productData, setProductData] = useState({
     id: 0,
@@ -22,24 +22,30 @@ export default function Product() {
       rate : 0.0,
       count : 0
     }
-})
+  })
   const searchParams = useSearchParams()
   const productID = searchParams.get("id");
-
   
   useEffect(()=>{
-    fetch(`https://fakestoreapi.com/products/${productID}`)
-          .then(res=>res.json())
-          .then(json=>{
-            setProductData({...json})
+    fetch(`https://fakestoreapi.com/products/${productID}`, { cache: 'force-cache' } )
+      .then(res=>res.json())
+      .then(json=>{
+        setProductData({...json})
     })
-    console.log(1)
   },[productID])
+
+  const handleAddToCart = () => {
+    setCartItems( [...cartItems, productData] )
+  }
+
   return (
     <main className="bg-white text-black px-24 h-screen">
       {/* Navigation Route */}
-      <p className="text-gray-300 text-sm mb-4">
-        {`Electronics / Audio / Headphones / ${productData.title}`}
+      <p className="text-gray-300 text-sm mb-4 uppercase">
+          <Link href="/">{productData.category}</Link>
+        {
+          ` / ${productData.title}`
+        }
       </p>
 
       <div className="flex">
@@ -52,10 +58,10 @@ export default function Product() {
                       alt={productData.category}
                       priority 
                       fill
-                      className={`mix-blend-multiply object-contain ${productData.id ? 'p-8' : 'p-28'}`} 
+                      className={`mix-blend-multiply object-contain transform-gpu ${productData.id ? 'p-8' : 'p-28'}`} 
                     />
                   :
-                    <div role="status" className="space-y-8 animate-pulse md:space-y-0 md:space-x-8 md:flex md:items-center">
+                    <div role="status" className="transform-gpu space-y-8 animate-pulse md:space-y-0 md:space-x-8 md:flex md:items-center">
                         <div className="flex items-center justify-center w-full h-48 bg-gray-300 rounded sm:w-96 dark:bg-gray-700">
                         <svg aria-hidden="true" className="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
@@ -73,12 +79,12 @@ export default function Product() {
             {/* Product Cards */}
             <div className='flex justify-between mt-4'>
               {    
-                [1,2,3,4].map((item) => {
+                [...Array(4)].map((item,i) => {
                     return (
-                      <div className="bg-gray-300 rounded relative w-28 h-28" key={item}>
+                      <div className="bg-gray-300 rounded relative w-28 h-28" key={`${i}-rating`}>
                         {
                           productData.id ?
-                            <Image src={productData.image} alt="Product-Image" className='p-2 mix-blend-multiply object-contain' fill />
+                            <Image src={productData.image} priority alt="Product-Image" className='p-2 mix-blend-multiply object-contain' fill />
                           :
                           <div role="status" className="space-y-8 animate-pulse md:space-y-0 md:space-x-8 md:flex md:items-center">
                             <div className="flex items-center justify-center w-full h-28 bg-gray-300 rounded sm:w-96 dark:bg-gray-700">
@@ -102,16 +108,18 @@ export default function Product() {
             
             {/* Stars */}
             <div className="flex mb-4 mt-2 items-center">{
-                [1,2,3,4,5].map( (r)=>{
+                [...Array(Math.floor(productData.rating.rate))].map( (item, i)=>{
                 return (
-                    <svg key={`${r}-ProductStars`} className="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                    <svg key={`${i}-ProductStars`} className="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                         <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                     </svg>
                 )
                 })}
                 <p className='ml-1'>({productData.rating.count})</p>
             </div>
+
                 <hr/>
+
                 <p className="font-bold text-xl my-4">
                     Price : ${productData.price}
                 </p>
@@ -145,11 +153,11 @@ export default function Product() {
                   <Link href="/order" className="bg-green-800 hover:bg-green-700 text-white px-16 py-2 rounded-full w-fit">
                     Buy Now  
                   </Link>
-                  <Link href="" 
+                  <button
                     className="border border-green-800 hover:bg-green-800 hover:text-white text-green-800 px-16 py-2 rounded-full w-fit"
-                    onClick={()=>{setCart(cart+1)}}>
+                    onClick={handleAddToCart}>
                     Add to Cart  
-                  </Link>
+                  </button>
                 </div>
 
                 <div className='rounded border mt-4'>

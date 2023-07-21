@@ -1,8 +1,9 @@
 "use client"
 import Image from "next/image"
 import { useUserData } from "@/app/context/userData"
+
 export default function Order() {
-  const { cart } = useUserData()
+  const { cartItems } = useUserData()
 
   return (
     <main className="bg-white text-black px-24 pb-8  flex gap-4">
@@ -10,27 +11,28 @@ export default function Order() {
       <div className="w-3/5">
         <div className="rounded border p-4 ">
           <p className="font-bold mb-4">Review Item And Shipping</p>
-
           {/* Product Card */}
-          {
-            [...Array(cart)].map((e, i)=>
-              <div className="flex items-center gap-4 my-2">
-                <div className="bg-gray-300 rounded relative w-28 h-28" >
-                  <Image src="/next.svg" alt="Product-Image" className='p-2 mix-blend-multiply object-contain' fill />
-                </div>
+          { 
+            cartItems.length ?
+              [...Array(cartItems.length)].map((item, i)=>
+                <div className="flex items-center gap-4 my-2" key={`${i}-cartProduct`}>
+                  <div className="bg-gray-300 rounded relative w-28 h-28" >
+                    <Image src={cartItems[i].image} alt="Product-Image" className='p-2 mix-blend-multiply object-contain' fill />
+                  </div>
 
-                <div className="w-full">
-                  <div className="flex justify-between">
-                    <p className="font-bold">Airpods-Max</p>
-                    <p>$259.00</p>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <p>Colour: {`pink`}</p>
-                    <p>Quantity: {`3`}</p>
+                  <div className="w-full">
+                    <div className="flex justify-between gap-6 ">
+                      <p className="font-bold">{cartItems[i].title}</p>
+                      <p>{`$${parseFloat(cartItems[i].price).toFixed(2)}`}</p>
+                    </div>
+                    <div className="flex uppercase">
+                      {cartItems[i].category}
+                    </div>
                   </div>
                 </div>
-              </div>
-            )
+              )
+            :
+              <p>You have empty cart</p>
           }
 
         </div>
@@ -86,7 +88,7 @@ export default function Order() {
         </div>
 
         <hr />
-        <p className="font-bold mt-4 mb-4">Payment Details</p>
+        <p className="font-bold mt-4 mb-4 ">Payment Details</p>
 
         <label className="flex gap-2 mb-1 cursor-pointer">
           <input type="radio" name="cash" defaultChecked />
@@ -106,9 +108,9 @@ export default function Order() {
         </label>
 
         <div className="flex gap-2 my-4">
-          <img src="/logo/amazon_logo.svg" width={100} height="100" className="rounded border p-2 h-12 object-contain" loading='lazy' />
-          <img src="/logo/paypal_logo.svg" width={100} className="rounded border p-2 h-12 object-contain" loading='lazy' />
-          <img src="/logo/visa_logo.svg" width={100} height={20} className="rounded border p-2 h-12 object-cover" loading='lazy' />
+          <Image src="/logo/amazon_logo.svg" width={100} height="100" alt="amazon-logo" className="rounded border p-2 h-12 object-contain " />
+          <Image src="/logo/paypal_logo.svg" width={100} height="100" alt="paypal-logo" className="rounded border p-2 h-12 object-contain"  />
+          <Image src="/logo/visa_logo.svg" width={100} height={20} alt="visa-logo" className="rounded border p-2 h-12 object-cover" />
         </div>
 
         <p className="font-bold">Email*</p>
