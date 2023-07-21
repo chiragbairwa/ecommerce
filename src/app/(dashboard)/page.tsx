@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 
+import { useUserData } from '../context/userData'
 // type ProductData {
 //   id : number,
 //   title:'',
@@ -11,20 +12,25 @@ import Image from 'next/image'
 //   description:'',
 //   image:''
 // }
+// interface userDataType{
+//   cart : any,
+//   setCart : (any:any)=>{}
+// }
 
 const ProductCard = (props : any) => {
+  const {cart, setCart} = useUserData()
 
-    const [productData, setProductData] = useState({
-      id: 0,
-      title:'',
-      price:'',
-      category:'',
-      description:'',
-      image:'',
-      rating:{
-        rate : 0.0,
-        count : 0
-      }
+  const [productData, setProductData] = useState({
+    id: 0,
+    title:'',
+    price:'',
+    category:'',
+    description:'',
+    image:'',
+    rating:{
+      rate : 0.0,
+      count : 0
+    }
   })
 
   useEffect(()=>{
@@ -90,14 +96,14 @@ const ProductCard = (props : any) => {
         <p className='ml-1'>({productData.rating.count})</p>
       </div>
 
-      <button className="rounded-full px-4 py-2 border border-2 text-black font-semibold hover:bg-gray-200" >
+      <button className="rounded-full px-4 py-2 border border-2 text-black font-semibold hover:bg-gray-200" 
+        onClick={()=> {setCart(cart+1)}} >
         Add to Cart
       </button>
     </div>
   )
 }
 export default function Home() {
-
   return (
     <main className="bg-white text-black px-24">
       <div className=' bg-pink-200 rounded p-12 mb-4' >

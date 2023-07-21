@@ -4,10 +4,13 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
+import { useUserData } from '@/app/context/userData'
+
 
 export default function Product() {
   const [noOfItem, setnoOfItems] = useState(0)
-
+  const {cart, setCart} = useUserData()
+  
   const [productData, setProductData] = useState({
     id: 0,
     title:'',
@@ -36,7 +39,7 @@ export default function Product() {
     <main className="bg-white text-black px-24 h-screen">
       {/* Navigation Route */}
       <p className="text-gray-300 text-sm mb-4">
-        {`Electronics / Audio / Headphones / airpods-max`}
+        {`Electronics / Audio / Headphones / ${productData.title}`}
       </p>
 
       <div className="flex">
@@ -142,7 +145,9 @@ export default function Product() {
                   <Link href="/order" className="bg-green-800 hover:bg-green-700 text-white px-16 py-2 rounded-full w-fit">
                     Buy Now  
                   </Link>
-                  <Link href="" className="border border-green-800 hover:bg-green-800 hover:text-white text-green-800 px-16 py-2 rounded-full w-fit">
+                  <Link href="" 
+                    className="border border-green-800 hover:bg-green-800 hover:text-white text-green-800 px-16 py-2 rounded-full w-fit"
+                    onClick={()=>{setCart(cart+1)}}>
                     Add to Cart  
                   </Link>
                 </div>
