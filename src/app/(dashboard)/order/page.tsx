@@ -5,6 +5,30 @@ import { useUserData } from "@/app/context/userData"
 export default function Order() {
   const { cartItems } = useUserData()
 
+    // DELETE FUNCTION
+    // const requestOptions = {
+    //     method: 'DELETE',
+    // };
+    // fetch(`http://localhost:3000/api/users?id=${id}`, requestOptions).then((res)=>{
+    //     console.log("Delete Success" + res.status)
+    // }).catch( (err)=>console.log(err) )
+  const deleteItem = ()=>{
+
+
+    // UPDATE REQUEST
+    // const requestOptions = {
+    //   method: 'PATCH',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({
+    //       cart : JSON.stringify(res)
+    //   })
+    // };
+    // fetch(`http://localhost:3000/api/users?id=${id}`, requestOptions)
+    //     .then((res)=>console.log("UPDATE Success" + res.status))
+    //     .catch( (err)=>console.log(err) )
+      
+  }
+
   return (
     <main className="bg-white text-black px-24 pb-8  flex gap-4">
       {/* Review Item & Delivery Info  */}
@@ -25,8 +49,9 @@ export default function Order() {
                       <p className="font-bold">{cartItems[i].title}</p>
                       <p>{`$${parseFloat(cartItems[i].price).toFixed(2)}`}</p>
                     </div>
-                    <div className="flex uppercase">
+                    <div className="flex uppercase justify-between">
                       {cartItems[i].category}
+                      <button onClick={deleteItem}>Delete</button>
                     </div>
                   </div>
                 </div>

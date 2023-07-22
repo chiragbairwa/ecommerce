@@ -4,17 +4,18 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 
 import { useUserData } from '../context/userData'
-// type ProductData {
-//   id : number,
-//   title:'',
-//   price:'',
-//   category:'',
-//   description:'',
-//   image:''
+// type ProductData = {
+//   id : Number,
+//   title: String,
+//   price: String,
+//   category: String,
+//   description: String,
+//   image: String
 // }
+
 // interface userDataType{
-//   cart : any,
-//   setCart : (any:any)=>{}
+//   cart : Number,
+//   setCart : (data:any)=>void
 // }
 
 const ProductCard = (props : any) => {
