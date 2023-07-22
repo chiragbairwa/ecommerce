@@ -43,12 +43,11 @@ const ProductCard = (props : any) => {
   }, [props.id])
   
   const handleAddToCart = () => {
-    setCartItems( [...cartItems, productData] )
+    setCartItems( [...cartItems, productData] , false)
   }
   
   return (
     <div className='w-64 h-42'>
-
       <div className="relative bg-gray-200 rounded p-4">
           <Link href={{
             pathname: "/product",

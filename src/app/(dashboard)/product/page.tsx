@@ -35,7 +35,7 @@ export default function Product() {
   },[productID])
 
   const handleAddToCart = () => {
-    setCartItems( [...cartItems, productData] )
+    setCartItems( [...cartItems, productData] , false)
   }
 
   return (

@@ -1,36 +1,22 @@
 "use client"
 import Image from "next/image"
 import { useUserData } from "@/app/context/userData"
+import { useRouter } from "next/navigation"
+import toast from "react-hot-toast"
 
 export default function Order() {
-  const { cartItems } = useUserData()
+  const { cartItems, setCartItems} = useUserData()
+  const router = useRouter()
 
-    // DELETE FUNCTION
-    // const requestOptions = {
-    //     method: 'DELETE',
-    // };
-    // fetch(`http://localhost:3000/api/users?id=${id}`, requestOptions).then((res)=>{
-    //     console.log("Delete Success" + res.status)
-    // }).catch( (err)=>console.log(err) )
-  const deleteItem = ()=>{
-
-
-    // UPDATE REQUEST
-    // const requestOptions = {
-    //   method: 'PATCH',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({
-    //       cart : JSON.stringify(res)
-    //   })
-    // };
-    // fetch(`http://localhost:3000/api/users?id=${id}`, requestOptions)
-    //     .then((res)=>console.log("UPDATE Success" + res.status))
-    //     .catch( (err)=>console.log(err) )
-      
+  const deleteItem = ( index: number) =>{
+    const restItems = cartItems
+    restItems.splice(index, 1)
+    setCartItems( restItems , true)
+    router.refresh()
   }
 
   return (
-    <main className="bg-white text-black px-24 pb-8  flex gap-4">
+    <main className="bg-white text-black px-24 pb-8 md:flex gap-4">
       {/* Review Item & Delivery Info  */}
       <div className="w-3/5">
         <div className="rounded border p-4 ">
@@ -40,18 +26,27 @@ export default function Order() {
             cartItems.length ?
               [...Array(cartItems.length)].map((item, i)=>
                 <div className="flex items-center gap-4 my-2" key={`${i}-cartProduct`}>
-                  <div className="bg-gray-300 rounded relative w-28 h-28" >
-                    <Image src={cartItems[i].image} alt="Product-Image" className='p-2 mix-blend-multiply object-contain' fill />
+                  <div className="bg-gray-300 rounded relative w-28 h-24 flex justify-center" >
+                    <Image src={cartItems[i].image} alt="Product-Image" className='p-1 mix-blend-multiply object-contain w-auto h-auto' width={75} height={75}/>
                   </div>
 
+                  {/* product data */}
                   <div className="w-full">
-                    <div className="flex justify-between gap-6 ">
+                    <div className="flex justify-between gap-6 mb-2">
                       <p className="font-bold">{cartItems[i].title}</p>
                       <p>{`$${parseFloat(cartItems[i].price).toFixed(2)}`}</p>
                     </div>
                     <div className="flex uppercase justify-between">
                       {cartItems[i].category}
-                      <button onClick={deleteItem}>Delete</button>
+                      <div className="flex cursor-pointer" onClick={()=>deleteItem(i)}>
+                        <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M10 11V17" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M14 11V17" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M4 7H20" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M6 7H12H18V18C18 19.6569 16.6569 21 15 21H9C7.34315 21 6 19.6569 6 18V7Z" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -132,7 +127,7 @@ export default function Order() {
           Credit or Debit Card
         </label>
 
-        <div className="flex gap-2 my-4">
+        <div className="md:flex md:gap-2 my-4">
           <Image src="/logo/amazon_logo.svg" width={100} height="100" alt="amazon-logo" className="rounded border p-2 h-12 object-contain " />
           <Image src="/logo/paypal_logo.svg" width={100} height="100" alt="paypal-logo" className="rounded border p-2 h-12 object-contain"  />
           <Image src="/logo/visa_logo.svg" width={100} height={20} alt="visa-logo" className="rounded border p-2 h-12 object-cover" />

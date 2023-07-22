@@ -1,7 +1,7 @@
 import '../globals.css'
 import type { Metadata } from 'next'
 import Navbar from './components/navbar'
-
+import { Toaster } from 'react-hot-toast'
 import { UserDataProvider } from "../context/userData";
 // import { Inter } from 'next/font/google'
 // const inter = Inter({ subsets: ['latin'] })
@@ -22,6 +22,7 @@ export default function RootLayout({
       <UserDataProvider>
         <body>
             <Navbar />
+            <Toaster position="top-center"/>
             {children}
         </body>
       </UserDataProvider>
