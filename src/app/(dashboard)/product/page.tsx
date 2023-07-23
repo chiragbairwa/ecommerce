@@ -39,9 +39,9 @@ export default function Product() {
   }
 
   return (
-    <main className="bg-white text-black px-24 h-screen">
+    <main className="px-24 h-screen">
       {/* Navigation Route */}
-      <p className="text-gray-300 text-sm mb-4 uppercase">
+      <p className="text-gray-800 text-sm mb-4 uppercase">
           <Link href="/">{productData.category}</Link>
         {
           ` / ${productData.title}`

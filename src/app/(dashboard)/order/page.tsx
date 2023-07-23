@@ -2,7 +2,6 @@
 import Image from "next/image"
 import { useUserData } from "@/app/context/userData"
 import { useRouter } from "next/navigation"
-import toast from "react-hot-toast"
 
 export default function Order() {
   const { cartItems, setCartItems} = useUserData()
@@ -16,7 +15,7 @@ export default function Order() {
   }
 
   return (
-    <main className="bg-white text-black px-24 pb-8 md:flex gap-4">
+    <main className="px-24 pb-8 md:flex gap-4">
       {/* Review Item & Delivery Info  */}
       <div className="w-3/5">
         <div className="rounded border p-4 ">
