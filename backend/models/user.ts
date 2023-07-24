@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose"
-
+import bcrypt from "bcrypt"
 // cart: [{
 //     id : Number,
 //     title: String,
@@ -13,25 +13,26 @@ const userSchema = new Schema(
     {
         username : {
             type : String,
+            required: [true, 'Username is required'],
             unique : true,
-            lowercase : true
+            lowercase : true,
+            trim : true
         },
         email : {
             type: String,
-            required: [true, 'is required field'],
+            required: [true, 'Email is required'],
             unique: true,
-            lowercase: true
+            lowercase: true,
+            trim : true
         },
-        hash : {
+        password : {
             type: String,
-            required: [true, 'is required field'],
-            select: false
+            required: [true, 'Password is required'],
         },
-        salt : {
-            type: String,
-            required: [true, 'is required field'],
-            select: false
-        },
+        forgotPasswordToken: String,
+        forgotPasswordTokenExpiry: String,
+        verifyToken : String,
+        verifyTokenExpiry : String,
         address : String,
         profilepic : String,
         cart : String
@@ -40,14 +41,11 @@ const userSchema = new Schema(
         timestamps:true
     }
 )
-// const userSchema = new Schema(
-//     {
-//         cart : String
-//     },
-//     {
-//         timestamps:true
-//     }
-// )
+
+userSchema.methods.comparePassword = function(password : string) {
+    return bcrypt.compareSync(password, this.password);
+}
+
 const User = mongoose.models.User || mongoose.model("User", userSchema)
 
 export default User;
