@@ -59,7 +59,10 @@ export default function SignUp() {
         </label>
         <input id="signupPass" type='password' {...register("password", { required: true, maxLength: 20 })} className='p-2 rounded -mt-3' placeholder='*********'/>
 
-        <input type="submit" disabled={loading} className='p-2 rounded border text-white bg-green-800 cursor-pointer' defaultValue="Register" />
+        <input type="submit" disabled={loading} 
+          className="p-2 rounded border cursor-pointer text-center bg-green-800 text-white border-green-800"
+          defaultValue={loading ? "Processing..." : "Register"}/>
+        
         <Link href="/signin" className='p-2 rounded border text-green-800 border-green-800 bg-white cursor-pointer text-center' >
           Sign In
         </Link>

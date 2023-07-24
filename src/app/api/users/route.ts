@@ -11,10 +11,8 @@ export async function POST(request:any) {
 }
 
 export async function GET(request: any) {
-    // const { id } = params;
     const id = request.nextUrl.searchParams.get("id")
     await connectMongoDB();
-    // const userData = await User.find()
     const userData = await User.findById(id)
 
     return NextResponse.json({userData}, {status: 200})
@@ -24,7 +22,6 @@ export async function DELETE(request:any) {
     const id = request.nextUrl.searchParams.get("id")
     await connectMongoDB();
     await User.findByIdAndDelete(id)
-
     return NextResponse.json({message: "User Deleted"}, {status: 200})
 }
 

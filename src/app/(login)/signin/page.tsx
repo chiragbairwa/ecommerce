@@ -4,6 +4,7 @@ import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import Link from 'next/link';
 
 type FormData = {
   email: string,
@@ -18,10 +19,10 @@ export default function SignIn() {
     setLoading(true)
     try{
       const response = await axios.post("/api/signin", user)
-      console.log("Login Success", response.data)
       
       if(response.status === 200){
         toast.success("Login Success")
+        setLoading(false)
         router.push("/")
       }
     } 
@@ -54,7 +55,13 @@ export default function SignIn() {
         <label>Password</label>
         <input type='password' {...register("password")} required className='p-2 rounded -mt-3' placeholder='*********'/>
 
-        <input type="submit" disabled={loading} className='p-2 rounded border text-white bg-green-800 cursor-pointer' defaultValue="Login" />
+        <input type="submit" disabled={loading} 
+          className="p-2 rounded border cursor-pointer text-center bg-green-800 text-white border-green-800"
+          defaultValue={loading ? "Processing..." : "Login"} />
+
+        <Link href="/signup" className='p-2 rounded border text-green-800 border-green-800 bg-white cursor-pointer text-center' >
+          Sign Up
+        </Link>
       </form>
     </main>
   )

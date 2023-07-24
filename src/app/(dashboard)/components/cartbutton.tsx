@@ -1,9 +1,9 @@
 "use client"
-import { useUserData } from "../../context/userData"
+import { useCartData } from "../../context/userData"
 import Link from "next/link"
 
 const CartButton = () => {
-  const { cartItems } = useUserData()
+  const { cartItems } = useCartData()
 
   return (
     <Link href="/order" className="flex gap-2 relative">

@@ -1,5 +1,4 @@
 import mongoose, { Schema } from "mongoose"
-import bcrypt from "bcrypt"
 // cart: [{
 //     id : Number,
 //     title: String,
@@ -41,10 +40,6 @@ const userSchema = new Schema(
         timestamps:true
     }
 )
-
-userSchema.methods.comparePassword = function(password : string) {
-    return bcrypt.compareSync(password, this.password);
-}
 
 const User = mongoose.models.User || mongoose.model("User", userSchema)
 

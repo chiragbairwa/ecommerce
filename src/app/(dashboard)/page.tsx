@@ -2,24 +2,10 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
-
-import { useUserData } from '../context/userData'
-// type ProductData = {
-//   id : Number,
-//   title: String,
-//   price: String,
-//   category: String,
-//   description: String,
-//   image: String
-// }
-
-// interface userDataType{
-//   cart : Number,
-//   setCart : (data:any)=>void
-// }
+import { useCartData } from '../context/userData'
 
 const ProductCard = (props : any) => {
-  const { cartItems, setCartItems} = useUserData()
+  const { cartItems, setCartItems} = useCartData()
 
   const [productData, setProductData] = useState({
     id: 0,

@@ -1,10 +1,10 @@
 "use client"
 import Image from "next/image"
-import { useUserData } from "@/app/context/userData"
+import { useCartData } from "@/app/context/userData"
 import { useRouter } from "next/navigation"
 
 export default function Order() {
-  const { cartItems, setCartItems} = useUserData()
+  const { cartItems, setCartItems} = useCartData()
   const router = useRouter()
 
   const deleteItem = ( index: number) =>{

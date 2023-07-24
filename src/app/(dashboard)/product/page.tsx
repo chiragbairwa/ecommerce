@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
-import { useUserData } from '@/app/context/userData'
+import { useCartData } from '@/app/context/userData'
 
 
 export default function Product() {
   const [noOfItem, setnoOfItems] = useState(0)
-  const {cartItems, setCartItems} = useUserData()
+  const {cartItems, setCartItems} = useCartData()
   
   const [productData, setProductData] = useState({
     id: 0,
