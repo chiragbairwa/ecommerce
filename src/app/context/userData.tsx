@@ -2,6 +2,7 @@
 import { createContext, useContext, useEffect, useState } from "react"
 import toast from "react-hot-toast"
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 // type ProductData = {
 //   id : Number,
@@ -46,7 +47,8 @@ export const useCartData = () => useContext<dataContextType>(CartDataContext)
 type Props = { children: any };
 
 
-export function UserDataProvider({ children }: Props) {    
+export function UserDataProvider({ children }: Props) { 
+    const router = useRouter()   
     const [cartItems , setCartItemsWHook] = useState([])
     const [id , setID] = useState<string>("")
     // const [userData , setUserData] = useState(userDataContextDefaultValues)
@@ -77,8 +79,15 @@ export function UserDataProvider({ children }: Props) {
         try{
             const syncID = async () => {
                 const user = await axios.get(`/api/me`)
-                return (user.data.user._id)
+                // if there is an id then return the id else go back to sign in
+                if(user.data.user){
+                    return (user.data.user._id)
+                }
+                else {
+                    document.cookie="token=" + "";
+                }
             }
+
             const syncCart = async (id:any)=>{
                 setID(id)
                 // console.log(id)
@@ -92,10 +101,16 @@ export function UserDataProvider({ children }: Props) {
                     const newCart = JSON.parse(data)
                     setCartItemsWHook( newCart )
                 })
+                // .catch((err)=>{
+                //     axios.get("/api/logout")
+                //     .then(()=>{
+                //         router.push("/signin")
+                //     })
+                // })
             }
             
-            // CALL get ID then SyncCART
-            syncID().then((id)=>syncCart(id))
+            // CALL get_ID then SyncCART
+            syncID().then(id => syncCart(id))
             
         }
         catch(error){

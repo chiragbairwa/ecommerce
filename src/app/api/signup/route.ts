@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
             verifyTokenExpiry : "",
             address : "",
             profilepic : "",
-            cart : ""
+            cart : "[]"
         }
 
         const newUser = await User.create( userData )
