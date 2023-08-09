@@ -80,12 +80,7 @@ export function UserDataProvider({ children }: Props) {
             const syncID = async () => {
                 const user = await axios.get(`/api/me`)
                 // if there is an id then return the id else go back to sign in
-                if(user.data.user){
-                    return (user.data.user._id)
-                }
-                else {
-                    document.cookie="token=" + "";
-                }
+                return (user.data.user._id)
             }
 
             const syncCart = async (id:any)=>{
@@ -101,12 +96,13 @@ export function UserDataProvider({ children }: Props) {
                     const newCart = JSON.parse(data)
                     setCartItemsWHook( newCart )
                 })
-                // .catch((err)=>{
-                //     axios.get("/api/logout")
-                //     .then(()=>{
-                //         router.push("/signin")
-                //     })
-                // })
+                .catch((err)=>{
+                    // if any error logout
+                    axios.get("/api/logout")
+                    .then(()=>{
+                        router.push("/signin")
+                    })
+                })
             }
             
             // CALL get_ID then SyncCART

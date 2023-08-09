@@ -12,11 +12,11 @@ const LogoutButton = () => {
       toast.success("Logout Successful")
       router.push("/signin")
     } catch (error: any) {
-      
+      console.log(error)
     }
   }
   return (
-    <button onClick={onLogout} className="flex gap-2 relative">
+    <button onClick={onLogout} className="flex gap-2 relative border py-1 px-3 rounded hover:border-red-500 hover:bg-red-500 hover:text-white">
       Logout
     </button>
   )
