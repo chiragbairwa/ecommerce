@@ -12,7 +12,7 @@ export async function POST(request:any) {
 }
 
 export async function GET(request: any) {
-    const id = request.nextUrl.searchParams.get("id")
+    const id:string = request.nextUrl.searchParams.get("id")
     const userData = await User.findById(id)
 
     return NextResponse.json({userData}, {status: 200})

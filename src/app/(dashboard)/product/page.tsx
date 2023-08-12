@@ -8,7 +8,7 @@ import { useCartData } from '@/app/context/userData'
 
 
 export default function Product() {
-  const [noOfItem, setnoOfItems] = useState(0)
+  const [noOfItem, setnoOfItems] = useState(1)
   const {cartItems, setCartItems} = useCartData()
   
   const [productData, setProductData] = useState({
@@ -34,8 +34,11 @@ export default function Product() {
     })
   },[productID])
 
-  const handleAddToCart = () => {
-    setCartItems( [...cartItems, productData] , false)
+  const handleAddToCart = async() => {
+    for(let i=0; i<noOfItem; i++){
+      console.log(i)
+      setCartItems([...cartItems, productData] , false)
+    }
   }
 
   return (
@@ -132,9 +135,10 @@ export default function Product() {
                       className="text-2xl px-4 py-1 "
                       disabled = {!noOfItem}
                       onClick={()=>setnoOfItems(noOfItem-1)}
-                      >-</button>
+                    >-</button>
 
                     <p className='w-4 text-green-800'>{noOfItem}</p>
+
                     <button className="text-2xl px-4 py-1 text-green-800"
                     onClick={()=>setnoOfItems(noOfItem+1)}>+</button>
                   </div>

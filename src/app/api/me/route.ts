@@ -8,9 +8,10 @@ import connectMongoDB from "../../../../backend/libs/mongodb"
 connectMongoDB();
 
 export async function GET(request: NextRequest){
-    try {
-        const userID = await getDataFromToken(request)
-        const user = await User.findOne({_id : userID}).select("-password")
+    try {      
+        const userID : string = await getDataFromToken(request)
+        // Cast userID first
+        const user = await User.findById(userID)
         
         return NextResponse.json({
             message: "User Found",

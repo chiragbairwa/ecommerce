@@ -50,10 +50,10 @@ type Props = { children: any };
 export function UserDataProvider({ children }: Props) { 
     const router = useRouter()   
     const [cartItems , setCartItemsWHook] = useState([])
-    const [id , setID] = useState<string>("")
+    let id = "";
     // const [userData , setUserData] = useState(userDataContextDefaultValues)
     
-    const setCartItems = (res:any, deleteItemCall: boolean)=>{
+    const setCartItems = async (res:any, deleteItemCall: boolean)=>{
         setCartItemsWHook( res )
         // UPDATE REQUEST
         const requestOptions = {
@@ -71,47 +71,41 @@ export function UserDataProvider({ children }: Props) {
                 :
                     toast.success('Added to Cart !')
             })
-            .catch( (err)=>console.log(err) )
+            .catch(err=>console.log(err))
     }
     
     useEffect(()=>{
         // FETCH ID from /api/me/ then update cart
-        try{
-            const syncID = async () => {
-                const user = await axios.get(`/api/me`)
-                // if there is an id then return the id else go back to sign in
-                return (user.data.user._id)
-            }
+        const syncCart = async(syncid:any)=>{
+            fetch(`/api/users?id=${syncid}`,{
+                cache: 'no-store',
+            })
+            .then((res)=>res.json())
+            .then((res)=>{
+                // console.log(res)
+                const data = res.userData.cart
+                const newCart = JSON.parse(data)
+                setCartItemsWHook( newCart )
+            })
+            .catch((err)=>{
+                // if any error logout
+                axios.get("/api/logout")
+                .then(()=>{
+                    router.push("/signin")
+                })
+            })
+        }
+        const syncID = async() => {
+            const user = await axios.get(`/api/me`)
+            id = (user.data.user._id)
 
-            const syncCart = async (id:any)=>{
-                setID(id)
-                // console.log(id)
-                fetch(`/api/users?id=${id}`,{
-                    cache: 'no-store',
-                })
-                .then((res)=>res.json())
-                .then((res)=>{
-                    // console.log(res)
-                    const data = res.userData.cart
-                    const newCart = JSON.parse(data)
-                    setCartItemsWHook( newCart )
-                })
-                .catch((err)=>{
-                    // if any error logout
-                    axios.get("/api/logout")
-                    .then(()=>{
-                        router.push("/signin")
-                    })
-                })
-            }
-            
-            // CALL get_ID then SyncCART
-            syncID().then(id => syncCart(id))
-            
+            syncCart(user.data.user._id)
         }
-        catch(error){
-            console.log("fetch Error" + error)
-        }
+        // CALL get_ID then SyncCART
+        syncID().catch((error)=>{
+            console.log(error)
+        })
+
     },[])
 
     const sendCartData = { cartItems, setCartItems }

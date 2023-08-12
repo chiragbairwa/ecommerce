@@ -3,8 +3,8 @@ import type { Metadata } from 'next'
 import Navbar from './components/navbar'
 import { Toaster } from 'react-hot-toast'
 import { UserDataProvider } from "../context/userData";
-// import { Inter } from 'next/font/google'
-// const inter = Inter({ subsets: ['latin'] })
+import { Inter } from 'next/font/google'
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Ecommerce',
@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       {/* <body className={inter.className}>{children}</body> */}
       <UserDataProvider>
-        <body>
+        <body className={inter.className}>
             <Navbar />
             <Toaster position="top-center"/>
             {children}
