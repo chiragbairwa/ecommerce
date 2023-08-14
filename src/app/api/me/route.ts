@@ -12,16 +12,16 @@ export async function GET(request: NextRequest){
     try {      
         const userID = await getDataFromToken(request)
                 
-        if (!mongoose.Types.ObjectId.isValid(userID)) {
-            return NextResponse.json({
-                message: 'Invalid user ID',
-                success: false,
-            }, { status: 401 });
-        }
+        // if (!mongoose.Types.ObjectId.isValid(userID)) {
+        //     return NextResponse.json({
+        //         message: 'Invalid user ID',
+        //         success: false,
+        //     }, { status: 401 });
+        // }
 
-        // Cast userID first
-        const ObjectId = new mongoose.Types.ObjectId(userID)
-        const user = await User.findById(ObjectId)
+        // // Cast userID first
+        // const ObjectId = new mongoose.Types.ObjectId(userID)
+        const user = await User.findById(userID)
         
         if (user !== null){
             return NextResponse.json({

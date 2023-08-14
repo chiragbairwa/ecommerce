@@ -7,7 +7,7 @@ import LogoutButton from "./logoutbutton"
 export default function Navbar() {
 
     return (
-      <nav className="flex flex-wrap py-4 justify-between items-center px-24">
+      <nav className="flex py-4 justify-between items-center md:px-24 px-4">
         <Image src="/vercel.svg" alt="logo" width={100} height={240} priority/>
         <ul className="hidden md:flex md:mx-4">
             <li className="px-4 py-2"><Link href="/">Categories</Link></li>

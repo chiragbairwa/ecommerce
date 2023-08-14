@@ -4,53 +4,62 @@ import { useCartData } from "@/app/context/userData"
 import { useRouter } from "next/navigation"
 
 export default function Order() {
-  const { cartItems, setCartItems} = useCartData()
+  const { cartItems, setCartItems } = useCartData()
   const router = useRouter()
 
-  const deleteItem = ( index: number) =>{
+  const deleteItem = (index: number) => {
     const restItems = cartItems
     restItems.splice(index, 1)
-    setCartItems( restItems , true)
+    setCartItems(restItems, true)
     router.refresh()
   }
 
+  const ProductCard = (props : any) => {
+    return (
+    <div className="flex items-center gap-4 my-2">
+      <div className="bg-gray-300 rounded relative w-28 h-24 flex justify-center" >
+        <Image src={cartItems[props.index].image} 
+          alt="Product-Image" 
+          className='p-1 mix-blend-multiply object-contain w-auto h-auto' 
+          width={75} height={75} />
+      </div>
+
+      {/* product data */}
+      <div className="w-full ">
+        <div className="flex justify-between gap-4 mb-2">
+          <p className="font-bold text-sm">{cartItems[props.index].title}</p>
+          <p>{`$${ parseFloat(cartItems[props.index].price).toFixed(2) }`}</p>
+        </div>
+        <div className="flex justify-between uppercase">
+          {cartItems[props.index].category}
+          <div className="flex cursor-pointer" onClick={() => deleteItem(props.index)}>
+            <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 11V17" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M14 11V17" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M4 7H20" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M6 7H12H18V18C18 19.6569 16.6569 21 15 21H9C7.34315 21 6 19.6569 6 18V7Z" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    )
+  }
+
   return (
-    <main className="px-24 pb-8 md:flex gap-4">
+    <main className="md:flex gap-4 md:px-24 px-4 pb-8">
       {/* Review Item & Delivery Info  */}
-      <div className="w-3/5">
+      <div className="md:w-3/5">
         <div className="rounded border p-4 ">
           <p className="font-bold mb-4">Review Item And Shipping</p>
           {/* Product Card */}
-          { 
+          {
             cartItems.length ?
-              [...Array(cartItems.length)].map((item, i)=>
-                <div className="flex items-center gap-4 my-2" key={`${i}-cartProduct`}>
-                  <div className="bg-gray-300 rounded relative w-28 h-24 flex justify-center" >
-                    <Image src={cartItems[i].image} alt="Product-Image" className='p-1 mix-blend-multiply object-contain w-auto h-auto' width={75} height={75}/>
-                  </div>
-
-                  {/* product data */}
-                  <div className="w-full">
-                    <div className="flex justify-between gap-6 mb-2">
-                      <p className="font-bold">{cartItems[i].title}</p>
-                      <p>{`$${parseFloat(cartItems[i].price).toFixed(2)}`}</p>
-                    </div>
-                    <div className="flex uppercase justify-between">
-                      {cartItems[i].category}
-                      <div className="flex cursor-pointer" onClick={()=>deleteItem(i)}>
-                        <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M10 11V17" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                          <path d="M14 11V17" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                          <path d="M4 7H20" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                          <path d="M6 7H12H18V18C18 19.6569 16.6569 21 15 21H9C7.34315 21 6 19.6569 6 18V7Z" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                          <path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              [...Array(cartItems.length)].map((item, i) =>
+                <ProductCard index={i} key={`${i}-cartProduct`}></ProductCard>
               )
-            :
+              :
               <p>You have empty cart</p>
           }
 
@@ -96,7 +105,7 @@ export default function Order() {
       </div>
 
       {/* Order Summary */}
-      <div className="rounded border p-4 w-2/5 h-fit">
+      <div className="rounded border p-4 md:w-2/5 mt-4 md:mt-0 h-fit">
         <p className="font-bold text-lg">
           Order Summary
         </p>
@@ -109,26 +118,26 @@ export default function Order() {
         <hr />
         <p className="font-bold mt-4 mb-4 ">Payment Details</p>
 
-        <label className="flex gap-2 mb-1 cursor-pointer">
+        <label className="flex gap-2 mb-1 cursor-pointer w-fit">
           <input type="radio" name="cash" defaultChecked />
           Cash-On Delivery
         </label>
-        <label className="flex gap-2 mb-1 cursor-pointer">
+        <label className="flex gap-2 mb-1 cursor-pointer w-fit">
           <input type="radio" name="cash" />
           Wallet
         </label>
-        <label className="flex gap-2 mb-1 cursor-pointer">
+        <label className="flex gap-2 mb-1 cursor-pointer w-fit">
           <input type="radio" name="cash" />
           Paypal
         </label>
-        <label className="flex gap-2 cursor-pointer">
+        <label className="flex gap-2 cursor-pointer w-fit">
           <input type="radio" name="cash" />
           Credit or Debit Card
         </label>
 
-        <div className="md:flex md:gap-2 my-4">
+        <div className="flex justify-between md:gap-2 my-4">
           <Image src="/logo/amazon_logo.svg" width={100} height="100" alt="amazon-logo" className="rounded border p-2 h-12 object-contain " />
-          <Image src="/logo/paypal_logo.svg" width={100} height="100" alt="paypal-logo" className="rounded border p-2 h-12 object-contain"  />
+          <Image src="/logo/paypal_logo.svg" width={100} height="100" alt="paypal-logo" className="rounded border p-2 h-12 object-contain" />
           <Image src="/logo/visa_logo.svg" width={100} height={20} alt="visa-logo" className="rounded border p-2 h-12 object-cover" />
         </div>
 

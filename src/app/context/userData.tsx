@@ -50,7 +50,7 @@ type Props = { children: any };
 export function UserDataProvider({ children }: Props) { 
     const router = useRouter()   
     const [cartItems , setCartItemsWHook] = useState([])
-    let id = "";
+    const [id , setID] = useState("")
     // const [userData , setUserData] = useState(userDataContextDefaultValues)
     
     const setCartItems = async (res:any, deleteItemCall: boolean)=>{
@@ -97,7 +97,7 @@ export function UserDataProvider({ children }: Props) {
         }
         const syncID = async() => {
             const user = await axios.get(`/api/me`)
-            id = (user.data.user._id)
+            setID(user.data.user._id)
 
             syncCart(user.data.user._id)
         }
@@ -106,7 +106,7 @@ export function UserDataProvider({ children }: Props) {
             console.log(error)
         })
 
-    },[])
+    },[id])
 
     const sendCartData = { cartItems, setCartItems }
     // const sendUserData = { userData, setUserData }

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import connectMongoDB from "../../../../backend/libs/mongodb";
 import User from "../../../../backend/models/user";
-
+import mongoose from "mongoose";
 connectMongoDB();
 
 export async function POST(request:any) {
