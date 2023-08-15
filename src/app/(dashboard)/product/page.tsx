@@ -36,13 +36,12 @@ export default function Product() {
 
   const handleAddToCart = async() => {
     for(let i=0; i<noOfItem; i++){
-      console.log(i)
       setCartItems([...cartItems, productData] , false)
     }
   }
 
   return (
-    <main className="px-24 h-screen">
+    <main className="md:px-24 px-4 md:h-screen">
       {/* Navigation Route */}
       <p className="text-gray-800 text-sm mb-4 uppercase">
           <Link href="/">{productData.category}</Link>
@@ -51,8 +50,8 @@ export default function Product() {
         }
       </p>
 
-      <div className="flex">
-        <div className='w-1/2'>
+      <div className="md:flex">
+        <div className='md:w-1/2'>
             <div className="w-full h-[25rem] bg-gray-300 flex justify-center rounded relative">
                 {
                   productData.id ?
@@ -80,7 +79,7 @@ export default function Product() {
                 </div>
             </div>
             {/* Product Cards */}
-            <div className='flex justify-between mt-4'>
+            <div className='flex justify-between flex-shrink gap-4 mt-4'>
               {    
                 [...Array(4)].map((item,i) => {
                     return (
@@ -105,9 +104,9 @@ export default function Product() {
         </div>
 
         {/* Content Side */}
-        <div className='w-1/2 pl-12'>
+        <div className='md:w-1/2 md:pl-12 mt-4 md:mt-0'>
             <p className='text-2xl font-bold'>{productData.title}</p>
-            <p className='text-xs mt-2'>{productData.description}</p>
+            <p className='md:text-sm mt-2'>{productData.description}</p>
             
             {/* Stars */}
             <div className="flex mb-4 mt-2 items-center">{
@@ -153,12 +152,12 @@ export default function Product() {
                 </div>
                 
                 {/* Action Buttons */}
-                <div className='flex gap-4'>
-                  <Link href="/order" className="bg-green-800 hover:bg-green-700 text-white px-16 py-2 rounded-full w-fit">
+                <div className='flex flex-col md:flex-row gap-4'>
+                  <Link href="/order" className="bg-green-800 hover:bg-green-700 text-white text-center px-16 py-2 rounded-full md:w-fit">
                     Buy Now  
                   </Link>
                   <button
-                    className="border border-green-800 hover:bg-green-800 hover:text-white text-green-800 px-16 py-2 rounded-full w-fit"
+                    className="border border-green-800 hover:bg-green-800 hover:text-white text-center text-green-800 px-16 py-2 rounded-full md:w-fit"
                     onClick={handleAddToCart}>
                     Add to Cart  
                   </button>

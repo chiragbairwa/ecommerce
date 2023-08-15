@@ -33,7 +33,7 @@ const ProductCard = (props : any) => {
   }
   
   return (
-    <div className='w-64 h-42'>
+    <div className='md:w-64 w-80 h-42'>
       <div className="relative bg-gray-200 rounded p-4">
           <Link href={{
             pathname: "/product",
@@ -69,9 +69,9 @@ const ProductCard = (props : any) => {
       </div>
       <div className='flex justify-between gap-4'>
         <p className='font-bold text-sm truncate'>{productData.title}</p>
-        <p className='font-bold text-lg'>{`${productData.price}$`} </p>
+        <p className='font-bold text-lg'>{`$${productData.price}`} </p>
       </div>
-      <p className='text-xs truncate'>{productData.description}</p>
+      <p className='text-sm md:text-xs truncate'>{productData.description}</p>
       
       {/* Stars */}
       <div className="flex mt-2 mb-4 items-center">{
@@ -86,7 +86,7 @@ const ProductCard = (props : any) => {
         <p className='ml-1'>({productData.rating.count})</p>
       </div>
 
-      <button className="rounded-full px-4 py-2 border-2 text-black font-semibold hover:bg-gray-200" 
+      <button className="rounded px-4 py-2 border-2 font-medium hover:bg-gray-200" 
         onClick={ handleAddToCart } >
         Add to Cart
       </button>
@@ -95,40 +95,40 @@ const ProductCard = (props : any) => {
 }
 export default function Home() {
   return (
-    <main className="px-24">
+    <main className="md:px-24 px-4">
       <div className=' bg-pink-200 rounded p-12 mb-4' >
-        <p className='text-black text-4xl font-bold mb-8 w-1/2'>
+        <p className='text-black text-4xl font-bold mb-8 md:w-1/2'>
           Grab Upto 50% Off On Selected Headphone
         </p>
         <Link href="/" className="rounded-full px-4 py-2 bg-black text-white hover:bg-white hover:text-black ">Buy Now</Link>
       </div>
 
-      <div className='flex gap-4'>
-        <select className="rounded-3xl bg-gray-300 w-fit text-xs  font-bold py-2 px-2">
+      <div className='flex flex-wrap gap-4'>
+        <select className="rounded bg-gray-300 w-fit text-xs  font-bold py-2 px-2">
           <option value="Headphones">Headphones </option>
         </select>
 
-        <select className="rounded-3xl bg-gray-300 w-fit text-xs  font-bold py-2 px-2">
+        <select className="rounded bg-gray-300 w-fit text-xs  font-bold py-2 px-2">
           <option value="Headphones">Price</option>
         </select>
         
-        <select className="rounded-3xl bg-gray-300 w-fit text-xs  font-bold py-2 px-2">
+        <select className="rounded bg-gray-300 w-fit text-xs  font-bold py-2 px-2">
           <option value="Headphones">Review</option>
         </select>
 
-        <select className="rounded-3xl bg-gray-300 w-fit text-xs  font-bold py-2 px-2">
+        <select className="rounded bg-gray-300 w-fit text-xs  font-bold py-2 px-2">
           <option value="Headphones">Colour</option>
         </select>
 
-        <select className="rounded-3xl bg-gray-300 w-fit text-xs  font-bold py-2 px-2">
+        <select className="rounded bg-gray-300 w-fit text-xs  font-bold py-2 px-2">
           <option value="Headphones">Material</option>
         </select>
       </div>
 
-      <h2 className='my-4 font-bold  text-xl'>Products For You!</h2>
+      <h2 className='my-4 font-bold text-xl'>Products For You!</h2>
 
       {/* Product Cards */}
-      <div className='grid md:grid-flow-col md:grid-rows-2 justify-between gap-4'>
+      <div className='grid md:grid-flow-col md:grid-rows-2 place-items-center gap-4'>
         {
           [1,2,3,4,5,6,7,8].map((productID)=> {
               return <ProductCard id={productID} key={productID}></ProductCard>
@@ -156,26 +156,26 @@ export default function Home() {
       </div>
 
       <h2 className='my-4 font-bold mt-8 text-xl'>Services To Help You Shop</h2>
-      {/* Product Cards */}
-      <div className='flex gap-4 pb-8'>
-        <div className='rounded border'>
-          <div className=''>
-            <p className='p-4 pr-48 font-bold text-xl'>Frequently Asked Questions</p>
+      {/* Services Cards */}
+      <div className='flex flex-wrap flex-grow gap-4 pb-8 justify-center md:justify-normal'>
+        <div className='rounded border grow'>
+          <div>
+            <p className='p-4 font-bold text-xl'>Frequently Asked Questions</p>
             <p className='p-4 pt-0 text-sm'>Updates on safe Shopping in our Stores</p>
           </div>
             <Image src='/faq.svg' className='w-full' width="100" height={100} alt="faq" />
         </div>
         
-        <div className='rounded border flex flex-col justify-between'>
+        <div className='rounded border grow flex flex-col justify-between'>
           <div>
-            <p className='p-4 pr-48 font-bold text-xl'>Online Payment Process</p>
+            <p className='p-4 font-bold text-xl'>Online Payment Process</p>
             <p className='p-4 pt-0 text-sm'>Updates on safe Shopping in our Stores</p>
           </div>
           <Image src='/online_pay.svg' className='w-full' width="100" height={100} alt="pay"/>
         </div>
         
-        <div className='rounded border overflow-hidden'>
-          <p className='p-4 pr-48 font-bold text-xl'>Home Delivery Options</p>
+        <div className='rounded border grow overflow-hidden'>
+          <p className='p-4 font-bold text-xl'>Home Delivery Options</p>
           <p className='p-4 pt-0 text-sm'>Updates on safe Shopping in our Stores</p>
           <Image src='/delivery_op.svg' className='w-full ' width="150" height={100} alt="delivery" />
         </div>
