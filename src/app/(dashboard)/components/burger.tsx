@@ -11,7 +11,7 @@ const Burger = ()=>{
         <div className="md:hidden relative z-50">
             <button className="relative group" 
                 onClick={(e)=>{
-                    isClicked ?
+                    !isClicked ?
                         e.currentTarget.focus()
                         :
                         e.currentTarget.blur();
@@ -34,7 +34,6 @@ const Burger = ()=>{
                     <li className="px-4 py-2"><Link href="/">{`What's New`}</Link></li>
                     <li className="px-4 py-2"><Link href="/">Delivery</Link></li>
                 </ul>
-
                 <LogoutButton/>
             </div>
         </div>
