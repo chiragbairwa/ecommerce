@@ -22,16 +22,14 @@ const SearchBar = () => {
 	}
 
 	useEffect(() => {
-		fetch('https://fakestoreapi.com/products', {
-			cache: 'force-cache',
-		})
+		fetch('https://fakestoreapi.com/products')
 			.then(res => res.json())
 			.then(json => setProducts(json))
 	}, [])
 
 	const ProductCard = (props: any) => {
 		return (
-			<Link href={`/product?id=${props.item.id}`}>
+			<Link href={`/product/${props.item.id}`}>
 				<div
 					className="text-sm px-3 py-2 hover:bg-gray-100 hover:cursor-pointer"
 					onClick={() => setSearchProduct([])}

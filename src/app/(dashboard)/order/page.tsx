@@ -19,7 +19,10 @@ export default function Order() {
 			<div className="flex items-center gap-4 my-2">
 				<div className="bg-gray-300 rounded relative w-28 h-24 flex justify-center">
 					<Image
-						src={cartItems[props.index]?.image}
+						src={
+							cartItems[props.index]?.image ||
+							'https://placehold.co/600x400.svg'
+						}
 						alt="Product-Image"
 						className="p-1 mix-blend-multiply object-contain w-auto h-auto"
 						width={75}

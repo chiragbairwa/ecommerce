@@ -4,15 +4,6 @@ import toast from 'react-hot-toast'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 
-// type ProductData = {
-//   id : Number,
-//   title: String,
-//   price: String,
-//   category: String,
-//   description: String,
-//   image: String
-// }
-
 type dataContextType = {
 	cartItems: any
 	setCartItems: (data: any, deleteItemCall: boolean) => void
@@ -22,34 +13,14 @@ const dataContextDefaultValues: dataContextType = {
 	setCartItems: (any, boolean) => {},
 }
 
-// type userDataContextType = {
-//     username : String,
-//     email : String,
-//     password : String,
-//     address : String,
-//     profilepic : String
-// }
-// const userDataContextDefaultValues: userDataContextType = {
-//     username : "",
-//     email : "",
-//     password : "",
-//     address : "",
-//     profilepic : ""
-// }
-
+// Create Context
 const CartDataContext = createContext<dataContextType>(dataContextDefaultValues)
-// const UserDataContext = createContext<userDataContextType>(userDataContextDefaultValues);
-
 export const useCartData = () => useContext<dataContextType>(CartDataContext)
-// export const useUserData = () => useContext<userDataContextType>(UserDataContext)
 
-type Props = { children: any }
-
-export function UserDataProvider({ children }: Props) {
+export function UserDataProvider({ children }: any) {
 	const router = useRouter()
 	const [cartItems, setCartItemsWHook] = useState([])
 	const [id, setID] = useState('')
-	// const [userData , setUserData] = useState(userDataContextDefaultValues)
 
 	const setCartItems = async (res: any, deleteItemCall: boolean) => {
 		setCartItemsWHook(res)
@@ -80,7 +51,6 @@ export function UserDataProvider({ children }: Props) {
 			})
 				.then(res => res.json())
 				.then(res => {
-					// console.log(res)
 					const data = res.userData.cart
 					const newCart = JSON.parse(data)
 					setCartItemsWHook(newCart)
@@ -104,14 +74,9 @@ export function UserDataProvider({ children }: Props) {
 		})
 	}, [id])
 
-	const sendCartData = { cartItems, setCartItems }
-	// const sendUserData = { userData, setUserData }
 	return (
-		// <UserDataContext.Provider value={sendUserData}>
-
-		<CartDataContext.Provider value={sendCartData}>
+		<CartDataContext.Provider value={{ cartItems, setCartItems }}>
 			{children}
 		</CartDataContext.Provider>
-		// </UserDataContext.Provider>
 	)
 }

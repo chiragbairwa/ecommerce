@@ -1,5 +1,4 @@
 'use client'
-import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 
@@ -8,7 +7,8 @@ const LogoutButton = () => {
 
 	const onLogout = async () => {
 		try {
-			await axios.get('/api/logout')
+			let res = await fetch('/api/logout')
+			res = await res.json()
 			toast.success('Logout Successful')
 			router.push('/signin')
 		} catch (error: any) {
