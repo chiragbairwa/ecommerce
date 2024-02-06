@@ -57,7 +57,7 @@ export default function Order() {
 	}
 
 	return (
-		<main className="md:flex gap-4 md:px-24 px-4 pb-8">
+		<main className="md:flex gap-4 pb-8">
 			{/* Review Item & Delivery Info  */}
 			<div className="md:w-3/5">
 				<div className="rounded border p-4 ">

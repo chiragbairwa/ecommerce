@@ -19,7 +19,9 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<UserDataProvider>
-				<body className={`${inter.className} flex flex-col h-screen`}>
+				<body
+					className={`${inter.className} flex flex-col h-screen px-4 md:px-24`}
+				>
 					<Navbar />
 					<Toaster position="top-center" />
 					{children}

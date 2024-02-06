@@ -3,14 +3,12 @@ import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useCartData } from '@/app/context/userData'
-import ImageSkeleton from '../imageSkeleton'
-import Loading from '../../components/loading'
 
 export default function ProductUI({ productData }: any) {
 	const [noOfItem, setnoOfItems] = useState(1)
 	const { cartItems, setCartItems } = useCartData()
 
-	const handleAddToCart = async () => {
+	const handleAddToCart = () => {
 		let data = [...cartItems, productData]
 		for (let i = 0; i < noOfItem - 1; i++) {
 			data = [...data, productData]
@@ -19,7 +17,7 @@ export default function ProductUI({ productData }: any) {
 	}
 
 	return (
-		<main className="md:px-24 px-4 ">
+		<main>
 			{/* Navigation Route */}
 			<div className="mb-4">
 				{productData?.id ? (
@@ -37,20 +35,17 @@ export default function ProductUI({ productData }: any) {
 			<div className="md:flex">
 				<div className="md:w-1/2">
 					<div className="w-full h-[25rem] md:h-[50vh] flex justify-center relative">
-						{productData?.id ? (
-							<div className="bg-gray-300 w-full rounded">
-								<Image
-									src={productData?.image}
-									alt={productData?.category}
-									priority
-									fill
-									quality={100}
-									className={`mix-blend-multiply object-contain transform-gpu p-8`}
-								/>
-							</div>
-						) : (
-							<ImageSkeleton />
-						)}
+						<div className="border-2 rounded w-full">
+							<Image
+								src={productData?.image}
+								alt={productData?.category}
+								priority
+								fill
+								quality={100}
+								className={`mix-blend-multiply object-contain transform-gpu p-8`}
+							/>
+						</div>
+
 						<div className="p-1 bg-gray-200 rounded-full absolute top-2 right-2">
 							<svg
 								className="w-5 h-5 text-gray-800 dark:text-white"
@@ -74,21 +69,17 @@ export default function ProductUI({ productData }: any) {
 						{[...Array(4)].map((item, i) => {
 							return (
 								<div
-									className="bg-gray-300 rounded relative w-28 h-28"
+									className="border-2 rounded relative w-28 h-28"
 									key={`${i}-rating`}
 								>
-									{productData.id ? (
-										<Image
-											src={productData.image}
-											priority
-											alt="Product-Image"
-											className="p-2 mix-blend-multiply object-contain"
-											fill
-											quality={40}
-										/>
-									) : (
-										<Loading width={8} height={8} />
-									)}
+									<Image
+										src={productData.image}
+										priority
+										alt="Product-Image"
+										className="p-2 mix-blend-multiply object-contain"
+										fill
+										quality={40}
+									/>
 								</div>
 							)
 						})}
